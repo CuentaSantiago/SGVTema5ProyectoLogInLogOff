@@ -57,12 +57,12 @@ if(!$exito){
                 <div>
                     <form name="input" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                         <!-- Mostrar los datos tecleados correctamente en intentos anteriores (en los value) -->
-                        Usuario: <input type="text" name="TUsuario" value="<?php htmlspecialchars($aRespuestas['Usuario']); ?>"max="8"/><br>
+                        Usuario: <input type="text" name="TUsuario" value="<?php htmlspecialchars($aRespuestas['Usuario']); ?>"/><br>
                         <?php
                         // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
                         if(!empty($aErrores['Usuario'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Usuario']}</span>";}
                         ?>
-                        Contraseña: <input type="text" name="TPassword" value="<?php htmlspecialchars($aRespuestas['Password']); ?>"/>
+                        Contraseña: <input type="password" name="TPassword" value="<?php htmlspecialchars($aRespuestas['Password']); ?>"/>
                         <?php
                         // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
                         if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
@@ -80,7 +80,7 @@ if(!$exito){
                                     ':usuario' =>$aRespuestas['Usuario'],
                                     ':password' =>$aRespuestas['Password']
                             ])){
-                            echo "<h1>Entrada Exitosa</h1>";
+                                echo "<h1>Entrada Exitosa</h1>";
                                 $exito=true;
                             }
                         }
@@ -106,8 +106,12 @@ if(!$exito){
 <?php
 }
 if($exito){
-    $_SERVER['PHP_AUTH_USER']=$aRespuestas['Usuario'];
-    $_SERVER['PHP_AUTH_PW']=$aRespuestas['Password'];
+    $aRespuestas['Password']="";
+    $aRespuestas['Usuario']="";
+    session_start();
+    $_SERSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas['Usuario'];
+    $_SERSION['passwordDAW2SGVAppLoginLogoff']=$aRespuestas['Password'];
+    $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];
     header("Location: http://10.199.9.174/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/Programa.php");
     exit();
 }

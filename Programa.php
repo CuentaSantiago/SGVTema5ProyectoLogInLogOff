@@ -15,6 +15,7 @@
     </head>
     <body>
         <header>
+            <img scr="https://10.199.9.174/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/webroot/images/images.png" alt="Logo"/>
             <h1>Proyecto login y logoff tema 5</h1>
         </header>
         <div>
@@ -23,9 +24,10 @@
                 <h3><a href="webroot/images/esquema.png" target="_blank" rel="noopener">Enlace</a></h3>
             </section>
             <section>
-                <h2>tabla departamentos</h2>
-                
+                <h2>Detalles</h2>
+                <h3><a href="Detalles.php">Enlace</a></h3>
             </section>
+            <button onclick="history.back()">Cancelar</button>
         </div>
         <footer>
             <p><time datetime="2026-09-14">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
