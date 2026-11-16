@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuarioDAW2SGVAppLoginLogoff'])) {
+    header("Location: Login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
     <!--

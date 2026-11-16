@@ -15,6 +15,7 @@ if(!$exito){
     <body>
         <header>
             <div>
+                <img scr="webroot/images/images.png" alt="Logo"/>
                 <h1>Tema 5 Aplicacion Log In Log Off</h1>
             </div>
         </header>
@@ -23,8 +24,8 @@ if(!$exito){
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
-            require_once 'config/ConexionDB_Users.php'; //archivo para conexion a la base de datos
-            require_once'core/231018libreriaValidacion.php'; //archivo para validaciones
+            require_once '../config/ConexionDB_Users.php'; //archivo para conexion a la base de datos
+            require_once'../core/231018libreriaValidacion.php'; //archivo para validaciones
             $miDB = new PDO($host,$USER,$PASSWORD); //conexion a la base de datos
         ?>
         <?php
@@ -75,7 +76,8 @@ if(!$exito){
                     // Tratamiento del formulario
                     try{
                         if($entradaOk){
-                            $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password like SHA2(:password, 256)");//consulta
+                            $resultadoConsultaRol = $miDB->prepare("select T01_Perfil  from T01_Usuario where BINARY T01_CodUsuario = :usuario");//consulta
+                            $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password = SHA2(:password, 256)");//consulta
                             if($resultadoConsulta->execute([
                                     ':usuario' =>$aRespuestas['Usuario'],
                                     ':password' =>$aRespuestas['Password']
@@ -106,11 +108,11 @@ if(!$exito){
 <?php
 }
 if($exito){
+    session_start();
+    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas['Usuario'];
+    $_SESSION['ROLDAW2SGVAppLoginLogoff']=$resultadoConsulta->fetchObject()->T01_Perfil;
     $aRespuestas['Password']="";
     $aRespuestas['Usuario']="";
-    session_start();
-    $_SERSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas['Usuario'];
-    $_SERSION['passwordDAW2SGVAppLoginLogoff']=$aRespuestas['Password'];
     $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];
     header("Location: http://10.199.9.174/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/Programa.php");
     exit();

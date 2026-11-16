@@ -1,3 +1,6 @@
+<?php
+session_start()
+?>
 <!DOCTYPE html>
 <html lang="es">
     <!--
@@ -15,18 +18,22 @@
     </head>
     <body>
         <header>
-            <img scr="https://10.199.9.174/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/webroot/images/images.png" alt="Logo"/>
+            <img scr="webroot/images/images.png" alt="Logo"/>
             <h1>Proyecto login y logoff tema 5</h1>
         </header>
         <div>
-            <section>
+            <div>
                 <h2>Esquema</h2>
                 <h3><a href="webroot/images/esquema.png" target="_blank" rel="noopener">Enlace</a></h3>
-            </section>
-            <section>
+            </div>
+            <div>
                 <h2>Detalles</h2>
                 <h3><a href="Detalles.php">Enlace</a></h3>
-            </section>
+            </div>
+            <div>
+                <h2>Tabla departamentos</h2>
+                <h3><a href="TablaDepartamentos.php">Enlace</a></h3>
+            </div>
             <button onclick="history.back()">Cancelar</button>
         </div>
         <footer>

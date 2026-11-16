@@ -1,5 +1,5 @@
 <?php
-$host="mysql:host=daw204.local.ieslossauces.es;dbname=DBSGVDWESProyectoTema4"; //base de datos
+$host="mysql:host=10.199.9.174;dbname=DBSGVDWESProyectoTema4"; //base de datos
 $USER ="userSGVDWESProyectoTema4"; //usuario
 $PASSWORD ="paso"; //contraseña
 ?>
