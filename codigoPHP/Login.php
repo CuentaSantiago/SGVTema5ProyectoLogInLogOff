@@ -76,7 +76,6 @@ if(!$exito){
                     // Tratamiento del formulario
                     try{
                         if($entradaOk){
-                            $resultadoConsultaRol = $miDB->prepare("select T01_Perfil  from T01_Usuario where BINARY T01_CodUsuario = :usuario");//consulta
                             $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password = SHA2(:password, 256)");//consulta
                             if($resultadoConsulta->execute([
                                     ':usuario' =>$aRespuestas['Usuario'],
@@ -100,7 +99,7 @@ if(!$exito){
             <div>
             <p><time datetime="2026-10-22">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
             <p>Santiago González Vicente. 14/09/2026</p>
-            <a href="../indexProyectoDWES.php"><i class="fa fa-home" style="font-size:40px; margin-right: 15px;"></i></a>
+            <a href="../../indexProyectoDWES.php"><i class="fa fa-home" style="font-size:40px; margin-right: 15px;"></i></a>
             </div>
         </footer>
     </body>
@@ -109,11 +108,12 @@ if(!$exito){
 }
 if($exito){
     session_start();
-    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas['Usuario'];
+    $registro = $resultadoConsulta ->fetchObject();
+    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$resultadoConsulta->fetchObject()->T01_Perfil;
     $_SESSION['ROLDAW2SGVAppLoginLogoff']=$resultadoConsulta->fetchObject()->T01_Perfil;
     $aRespuestas['Password']="";
     $aRespuestas['Usuario']="";
     $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];
-    header("Location: http://10.199.9.174/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/Programa.php");
+    header("Location: http://10.199.9.174/SGVDWESProyectoDWES/Programa.php");
     exit();
 }
