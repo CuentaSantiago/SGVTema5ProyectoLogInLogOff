@@ -14,18 +14,38 @@
     </head>
     <body>
         <?php
-        echo "<h2>Detalles: </h2><br>";
-        echo "<h4>SERVER: </h4><br>";
-        echo "<ul>";
-        foreach ($_SERVER as $key => $value) {
-            echo "<li>$key contiene $value </li>";
-        }
-        echo "</ul> <br>";
-        echo "<h4>SESSION: </h4><br>";
-        echo "<ul>";
-        print_r($_SESSION);
-        echo "</ul> <br>";
-        ?>
+                $aSuperglobales = [
+                    '$_SESSION' => $_SESSION,
+                    '$_COOKIE' => $_COOKIE,
+                    '$_SERVER' => $_SERVER,
+                    '$_REQUEST' => $_REQUEST,
+                    '$_GET' => $_GET,
+                    '$_POST' => $_POST,
+                    '$_FILES' => $_FILES,
+                    '$_ENV' => $_ENV
+                ];
+
+                // Recorrido del array
+                foreach ($aSuperglobales as $nombreSuperglobal => $arraySuperglobal) {
+                    echo "<h3 class='superGlobal'>$nombreSuperglobal</h3>";
+
+                    if (!empty($arraySuperglobal)) {
+                        echo "<ul>";
+
+                        foreach ($arraySuperglobal as $nombre => $contenido) {
+                            if (is_array($contenido)) {
+                                $contenido = "<pre>" . print_r($contenido, true) . "</pre>";
+                            }
+                            echo "<li><span style='color:blue;font-weight:bold'>$nombre : </span> $contenido</li>";
+                        }
+                        echo "</ul>";
+                    } else {
+                        echo "<div class='vacio'>La variable $nombreSuperglobal esta vacia en este momento.</div>";
+                    }
+                }
+
+                phpinfo();
+                ?>
         <button onclick="history.back()">Cancelar</button>
         <footer>
             <p><time datetime="2026-09-14">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
