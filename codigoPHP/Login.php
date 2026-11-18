@@ -82,7 +82,7 @@ if(!$exito){
                     try{
                         if($entradaOk){
                             $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password = SHA2(:password, 256)");//consulta
-                            $ActualizacionConsulta = $miDB->prepare("update T01_Usuario set T01_NumConexiones=T01_NumConexiones+1, T01_FechaHoraUltimaConexion=now() WHERE BINARY T01_CodUsuario = :usuario");//consulta
+                            $ActualizacionConsulta = $miDB->prepare("update T01_Usuario set T01_NumConexiones=T01_NumConexiones+1, T01_FechaHoraUltimaConexion=now() WHERE T01_CodUsuario = :usuario");//consulta
                             if($resultadoConsulta->execute([
                                     ':usuario' =>$aRespuestas['Usuario'],
                                     ':password' =>$aRespuestas['Password']
@@ -125,7 +125,7 @@ if (isset($_REQUEST['volver'])) {
 }
 if($exito){
     session_start();
-    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas[];
+    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas;
     $aRespuestas['Password']="";
     $aRespuestas['Usuario']="";
     $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];

@@ -21,7 +21,6 @@ if (isset($_REQUEST['Cancelar'])) {
     </head>
     <body>
         <header>
-            
             <h1>Proyecto login y logoff tema 5</h1>
         </header>
         <div>
