@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (isset($_REQUEST['volver'])) {
+    header("Location: ./indexProyectoLoginLogoff.php");
+}
+?>
 <html>
     <head>
         <title>Ejercicio 2</title>
@@ -53,9 +59,13 @@
                 unset($Transaccion);
             }
         ?>
+        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+            <div class="botones"><input type="submit" name="Cancelar" value="Cancelar"/></div>
+        </form> 
         <footer>
             <p><time datetime="2026-09-14">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
             <p>Santiago González Vicente. 14/09/2026</p>
+            <a href="https://github.com/CuentaSantiago/SGVTema5ProyectoLogInLogOff"><i class="fa fa-github" style="font-size:40px; margin-right: 15px;"></i></a>
             <a href="https://github.com/CuentaEducaSantiago/SGVDWESProyectoTema5" target="_blank" rel="noopener"><i class="fa fa-github" style="font-size:40px; margin-right: 15px;"></i></a>
             <a href="../../indexProyectoDWES.php"><i class="fa fa-home" style="font-size:40px; margin-right: 15px;"></i></a>
         </footer>

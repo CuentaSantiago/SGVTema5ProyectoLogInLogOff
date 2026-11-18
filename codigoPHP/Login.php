@@ -37,7 +37,12 @@ if(!$exito){
             ]; // Array donde recogemos los mensajes de error
             $aRespuestas = [
                 'Usuario' => '',
-                'Password' => ''
+                'Password' => '',
+                'DescUsuario' => '',
+                'FechaHoraUltimaConexion' => '',
+                'NumConexiones' => '',
+                'Perfil' => '',
+                'ImagenUsuario' => ''
             ]; // Array donde recogeremos las respuestas correctas (si $entradaOK)
                     if(isset($_POST["submit"])){
                         // Validamos los datos para cada campo del formulario.
@@ -58,12 +63,12 @@ if(!$exito){
                 <div>
                     <form name="input" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                         <!-- Mostrar los datos tecleados correctamente en intentos anteriores (en los value) -->
-                        Usuario: <input type="text" name="TUsuario" value="<?php htmlspecialchars($aRespuestas['Usuario']); ?>"/><br>
+                        Usuario: <input type="text" name="TUsuario" value="<?php echo htmlspecialchars($aRespuestas['Usuario']); ?>"/><br>
                         <?php
                         // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
                         if(!empty($aErrores['Usuario'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Usuario']}</span>";}
                         ?>
-                        Contraseña: <input type="password" name="TPassword" value="<?php htmlspecialchars($aRespuestas['Password']); ?>"/>
+                        Contraseña: <input type="password" name="TPassword" value="<?php echo htmlspecialchars($aRespuestas['Password']); ?>"/>
                         <?php
                         // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
                         if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
@@ -77,11 +82,19 @@ if(!$exito){
                     try{
                         if($entradaOk){
                             $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password = SHA2(:password, 256)");//consulta
+                            $ActualizacionConsulta = $miDB->prepare("update T01_Usuario set T01_NumConexiones=T01_NumConexiones+1, T01_FechaHoraUltimaConexion=now() WHERE BINARY T01_CodUsuario = :usuario");//consulta
                             if($resultadoConsulta->execute([
                                     ':usuario' =>$aRespuestas['Usuario'],
                                     ':password' =>$aRespuestas['Password']
                             ])){
-                                echo "<h1>Entrada Exitosa</h1>";
+                                $ActualizacionConsulta->execute([
+                                    ':usuario' =>$aRespuestas['Usuario']]);
+                                $registro = $resultadoConsulta ->fetchObject();
+                                $aRespuestas['DescUsuario']=$registro->T01_DescUsuario;
+                                $aRespuestas['FechaHoraUltimaConexion']=$registro->T01_FechaHoraUltimaConexion;
+                                $aRespuestas['NumConexiones']=$registro->T01_NumConexiones;
+                                $aRespuestas['Perfil']=$registro->T01_Perfil;
+                                $aRespuestas['ImagenUsuario']=$registro->T01_ImagenUsuario;
                                 $exito=true;
                             }
                         }
@@ -90,7 +103,7 @@ if(!$exito){
                     }
                     finally {
                     // Cierra la conexion con la base de datos
-                        unset($Transaccion);
+                        unset($resultadoConsulta);
                     }
                 ?>
             </div><!-- Espacio del form -->
@@ -98,22 +111,26 @@ if(!$exito){
         <footer>
             <div>
             <p><time datetime="2026-10-22">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
-            <p>Santiago González Vicente. 14/09/2026</p>
+            <p>Santiago González Vicente. 14/09/2026</p> 
+            <a href="https://github.com/CuentaSantiago/SGVTema5ProyectoLogInLogOff"><i class="fa fa-github" style="font-size:40px; margin-right: 15px;"></i></a>
             <a href="../../indexProyectoDWES.php"><i class="fa fa-home" style="font-size:40px; margin-right: 15px;"></i></a>
             </div>
         </footer>
     </body>
 </html>
 <?php
+if (isset($_REQUEST['volver'])) {
+    header("Location: ./indexProyectoLoginLogoff.php");
+}
 }
 if($exito){
     session_start();
-    $registro = $resultadoConsulta ->fetchObject();
-    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$resultadoConsulta->fetchObject()->T01_Perfil;
-    $_SESSION['ROLDAW2SGVAppLoginLogoff']=$resultadoConsulta->fetchObject()->T01_Perfil;
+    $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas[];
     $aRespuestas['Password']="";
     $aRespuestas['Usuario']="";
     $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];
-    header("Location: http://10.199.9.174/SGVDWESProyectoDWES/Programa.php");
+    header("Location: ./Programa.php");
     exit();
 }
+
+?>

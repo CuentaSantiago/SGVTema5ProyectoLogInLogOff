@@ -1,7 +1,64 @@
-<?php
-
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-
+<html>
+    <head>
+        <title>Ejercicio 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="shortcut icon" type="image/jpg" href="webroot/favicon/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="webroot/css/estilos.css">
+    </head>
+    <body>
+        <h1><a href='../indexProyectoTema4.php'>volver</a></h1>
+        <?php
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL); //para ver errores
+        ?>
+        <?php
+            require_once './config/ConexionDB_Departamentos.php'; //archivo para conexion a la base de datos
+            try{
+                $miDB = new PDO($host,$USER,$PASSWORD); //conexion a la base de datos
+                echo "<table>";
+                $resultadoConsulta = $miDB->prepare('select * from T02_DEPARTAMENTO');//consulta preparada
+                $resultadoConsulta->execute();//ejecutada
+                echo "<table>";
+                echo "<tr>";
+                echo "<th>Codigo</th>";
+                echo "<th>Nombre</th>";
+                echo "<th>Fecha Creacion</th>";
+                echo "<th>Valor de Departmento</th>";
+                echo "<th>FechaBaja</th>";
+                echo "</tr>";
+                while ($registro = $resultadoConsulta ->fetchObject()){//mostrar resultados
+                    echo "<tr>";
+                    echo '<td>'.$registro->T02_CodDepartamento.'</td>';
+                    echo '<td>'.$registro->T02_DescDepartamento.'</td>';
+                    $FechaCreacion = new DateTime($registro->T02_FechaCreacionDepartamento);
+                    echo '<td>'.$FechaCreacion->format('d/m/Y').'</td>';
+                    echo '<td>'.number_format($registro->T02_VolumenDeNegocio,2,',','.').' €</td>';
+                    if ($registro->T02_FechaBajaDepartamento!==null) {//comprobacion null
+                        $FechaBaja = new DateTime($registro->T02_FechaBajaDepartamento);
+                        echo '<td>'.$FechaBaja->format('d/m/Y').'</td>';
+                    } else {
+                        echo '<td></td>';
+                    }
+                    echo "<tr>";
+                }
+                echo "<table>";
+            }catch(PDOException $e){//para atrapar excepciones
+                echo $e->getMessage()."<br>";
+            }
+            finally {
+            // Cierra la conexion con la base de datos
+                unset($Transaccion);
+            }
+        ?>
+        <footer>
+            <p><time datetime="2026-09-14">2026-2027</time> IES LOS SAUCES. ©Todos los derechos reservados</p>
+            <p>Santiago González Vicente. 14/09/2026</p>
+            <a href="https://github.com/CuentaSantiago/SGVTema5ProyectoLogInLogOff"><i class="fa fa-github" style="font-size:40px; margin-right: 15px;"></i></a>
+            <a href="https://github.com/CuentaEducaSantiago/SGVDWESProyectoTema5" target="_blank" rel="noopener"><i class="fa fa-github" style="font-size:40px; margin-right: 15px;"></i></a>
+            <a href="../../indexProyectoDWES.php"><i class="fa fa-home" style="font-size:40px; margin-right: 15px;"></i></a>
+        </footer>
+    </body>
+</html>
