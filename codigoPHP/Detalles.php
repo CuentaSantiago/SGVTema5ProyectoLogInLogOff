@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuarioDAW2SGVAppLoginLogoff'])) {
     exit;
 }
 if (isset($_REQUEST['Cancelar'])) {
-    header("Location: ./indexProyectoLoginLogoff.php");
+    header("Location: ./Programa.php");
 }
 ?>
 <!DOCTYPE html>

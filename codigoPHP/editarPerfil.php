@@ -15,38 +15,6 @@
             </div>
         </header>
         <main>
-        <?php
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
-            require_once '../config/ConexionDB_Users.php'; //archivo para conexion a la base de datos
-            require_once'../core/231018libreriaValidacion.php'; //archivo para validaciones
-            $miDB = new PDO($host,$USER,$PASSWORD); //conexion a la base de datos
-            session_start();
-        ?>
-        <?php
-            // Inicialización de variables
-            $entradaOk = true; // Variable que nos indica que todo va bien
-            $aErrores = [
-                'Usuario' => '',
-                'Password' => ''
-            ]; // Array donde recogemos los mensajes de error
-            $aRespuestas = [
-                'Usuario' => '',
-                'Password' => '',
-                'DescUsuario' => '',
-                'FechaHoraUltimaConexion' => '',
-                'NumConexiones' => '',
-                'Perfil' => '',
-                'ImagenUsuario' => ''
-            ]; // Array donde recogeremos las respuestas correctas (si $entradaOK)
-            $resultadoConsulta = $miDB->prepare("select * from T01_Usuario where BINARY T01_CodUsuario = :usuario and BINARY T01_Password = SHA2(:password, 256)");//consulta
-            $resultadoConsulta->execute([
-                    ':usuario' =>$_SESSION['usuarioDAW2SGVAppLoginLogoff']['Usuario']
-            ]);
-            
-                ?>
-                <!-- Mostrar formulario -->
                 <div>
                     <form name="input" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                         <!-- Mostrar los datos tecleados correctamente en intentos anteriores (en los value) -->
@@ -56,6 +24,33 @@
                         if(!empty($aErrores['Usuario'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Usuario']}</span>";}
                         ?>
                         Contraseña: <input type="password" name="TPassword" value="<?php echo htmlspecialchars($aRespuestas['Password']); ?>"/>
+                        <?php
+                        // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
+                        if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
+                        ?>
+                        <!-- Mostrar los datos tecleados correctamente en intentos anteriores (en los value) -->
+                        Descripcion Usuario: <input type="text" name="TDescUsuario" value="<?php echo htmlspecialchars($aRespuestas['DescUsuario']); ?>"/><br>
+                        <?php
+                        // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
+                        if(!empty($aErrores['Usuario'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Usuario']}</span>";}
+                        ?>
+                        Fecha y Hora de la Ultima Conexion: <input type="password" name="TPassword" value="<?php echo htmlspecialchars($aRespuestas['Password']); ?>"/>
+                        <?php
+                        // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
+                        if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
+                        ?>
+                        <!-- Mostrar los datos tecleados correctamente en intentos anteriores (en los value) -->
+                        Numero conexiones: <input type="text" name="TUsuario" value="<?php echo htmlspecialchars($aRespuestas['Usuario']); ?>"/><br>
+                        <?php
+                        // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
+                        if(!empty($aErrores['Usuario'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Usuario']}</span>";}
+                        ?>
+                        Perfil: <input type="password" name="TPassword" value="<?php echo htmlspecialchars($aRespuestas['Password']); ?>"/>
+                        <?php
+                        // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
+                        if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
+                        ?>
+                        Imagebn Usuario: <input type="password" name="TPassword" value="<?php echo htmlspecialchars($aRespuestas['Password']); ?>"/>
                         <?php
                         // Mostrar mensajes de error (si los hay y el formulario no se muestra por primera vez)
                         if(!empty($aErrores['Password'])) {echo "<span style='color:red; display:block; font-size:13px;'>{$aErrores['Password']}</span>";}
