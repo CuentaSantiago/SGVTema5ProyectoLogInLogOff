@@ -55,7 +55,7 @@ try{
             $_SESSION['usuarioDAW2SGVAppLoginLogoff']=$aRespuestas;
             $aRespuestas['Password']="";
             $aRespuestas['Usuario']="";
-            $_COOKIE['sessionID']=$_SESSION['SSL_SESSION_ID'];
+            setcookie('sessionID', $_SESSION['SSL_SESSION_ID']);
             header("Location: ./Programa.php");
             exit();
         }

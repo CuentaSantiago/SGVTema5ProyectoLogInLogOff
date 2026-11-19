@@ -15,7 +15,7 @@
     </head>
     <body>
         <header>
-            <img scr="http://daw204.local.ieslossauces.es/SGVDWESProyectoDWES/SGVDWESProyectoLogInLoOffgTema5/webroot/images/images.png" alt="Logo"/>
+            <img scr="webroot/images/images.webp" alt="Logo"/>
             <h1>UT5: Proyecto LogIn LogOff</h1>
         </header>
         <main>
