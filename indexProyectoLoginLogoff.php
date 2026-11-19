@@ -20,7 +20,7 @@
         </header>
         <main>
             <form name="input" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-                <div class="botones"><input type="submit" name="submit" value="Entrar"/><input type="submit" name="Cancelar" value="Cancelar"/></div>
+                <div class="botones"><input type="submit" name="submit" value="Entrar"/></div>
             </form>
         </main>
         <footer>
